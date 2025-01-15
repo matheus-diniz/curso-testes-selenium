@@ -32,6 +32,7 @@ public class HomePage extends BasePage {
         HomePage homePage = new HomePage();
         homePage.goToHomePage();
 
+//TODO: AJUSTAR MÉTODO PARA NÃO QUEBRAR NOS CASOS EM QUE A CONTA NÃO TEM SALDO POIS NÃO HÁ MOVIMENTAÇÃO
         for (String conta : contas){
             if (wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[td[contains(text(), '"+conta+"')]]"))).isDisplayed()){
                 String saldoConta = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[td[contains(text(), '"+conta+"')]]/td[2]"))).getText();
