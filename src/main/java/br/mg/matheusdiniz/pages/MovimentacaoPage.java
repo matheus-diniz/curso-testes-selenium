@@ -5,7 +5,6 @@ import br.mg.matheusdiniz.core.DriverFactory;
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -27,6 +26,9 @@ public class MovimentacaoPage extends BasePage {
 
     @FindBy(how = How.XPATH, using = "//button[@type='submit']")
     protected WebElement btnSalvarMovimentacao;
+
+    @FindBy(how = How.XPATH, using = "//input[@type='submit']")
+    protected WebElement btnBuscarMovimentacao;
 
     @FindBy(how = How.XPATH, using = "//div[@class='alert alert-danger']")
     protected WebElement alertDanger;
@@ -65,7 +67,7 @@ public class MovimentacaoPage extends BasePage {
         clickClickableElement(menuMovimentacao);
     }
 
-    public void goToExtratoPage(){
+    public void goToExtratoPage() {
         clickClickableElement(menuExtrato);
     }
 
@@ -81,7 +83,7 @@ public class MovimentacaoPage extends BasePage {
         }
     }
 
-    public void validarMovimentacaoFutura(){
+    public void validarMovimentacaoFutura() {
         Faker faker = new Faker();
         Date future = faker.date().future(10, TimeUnit.DAYS);
         Date payment = faker.date().past(3, TimeUnit.DAYS);
@@ -91,9 +93,9 @@ public class MovimentacaoPage extends BasePage {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        sendKeys(iptDataTransacao,formatter.format(future));
-        sendKeys(iptDataPagamento,formatter.format(payment));
-        sendKeys(iptDescricao, "Pagamento "+today.format(monthFormatter)+" "+faker.name().firstName());
+        sendKeys(iptDataTransacao, formatter.format(future));
+        sendKeys(iptDataPagamento, formatter.format(payment));
+        sendKeys(iptDescricao, "Pagamento " + today.format(monthFormatter) + " " + faker.name().firstName());
         sendKeys(iptInteressado, faker.name().firstName());
         sendKeys(iptValor, faker.numerify("####.##"));
 //        clicarRadio(By.xpath("//input[@id='status_pendente']"));
@@ -104,12 +106,12 @@ public class MovimentacaoPage extends BasePage {
             List<WebElement> listItens = DriverFactory.getDriver().findElements(By.xpath("//div[@class='alert alert-danger']//ul/li"));
             for (WebElement item : listItens) {
                 System.out.println(item.getText());
-               Assert.assertEquals("Data da Movimentação deve ser menor ou igual à data atual", item.getText());
+                Assert.assertEquals("Data da Movimentação deve ser menor ou igual à data atual", item.getText());
             }
         }
     }
 
-    public void cadastrarMovimentacao(){
+    public void cadastrarMovimentacao() {
         Faker faker = new Faker();
         Date future = faker.date().future(5, TimeUnit.DAYS);
         Date payment = faker.date().past(5, TimeUnit.DAYS);
@@ -119,9 +121,9 @@ public class MovimentacaoPage extends BasePage {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        sendKeys(iptDataTransacao,formatter.format(payment));
-        sendKeys(iptDataPagamento,formatter.format(future));
-        sendKeys(iptDescricao, "Pagamento "+today.format(monthFormatter)+" "+faker.name().firstName());
+        sendKeys(iptDataTransacao, formatter.format(payment));
+        sendKeys(iptDataPagamento, formatter.format(future));
+        sendKeys(iptDescricao, "Pagamento " + today.format(monthFormatter) + " " + faker.name().firstName());
         sendKeys(iptInteressado, faker.name().firstName());
         sendKeys(iptValor, faker.numerify("####.##"));
 //        clicarRadio(By.xpath("//input[@id='status_pendente']"));
@@ -129,18 +131,18 @@ public class MovimentacaoPage extends BasePage {
         clickClickableElement(btnSalvarMovimentacao);
 
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOf(alertSucess)).isDisplayed());
-        Assert.assertEquals("Movimentação adicionada com sucesso!",wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
+        Assert.assertEquals("Movimentação adicionada com sucesso!", wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
     }
 
-    public void removerMovimentacao(){
+    public void removerMovimentacao() {
         List<String> dadosUltimaMovimentacao = new ArrayList<>();
 
-        for (int i=1;i<6;i++){
-            dadosUltimaMovimentacao.add(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[last()]//td["+i+"]"))).getText());
+        for (int i = 1; i < 6; i++) {
+            dadosUltimaMovimentacao.add(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[last()]//td[" + i + "]"))).getText());
         }
 
         System.out.println("Dados da última movimentação da lista...");
-        for (String data : dadosUltimaMovimentacao){
+        for (String data : dadosUltimaMovimentacao) {
             System.out.println(data);
         }
 
@@ -148,20 +150,18 @@ public class MovimentacaoPage extends BasePage {
         clickClickableElement(actionRemoverUltimaTransacao);
 
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOf(alertSucess)).isDisplayed());
-        Assert.assertEquals("Movimentação removida com sucesso!",wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
+        Assert.assertEquals("Movimentação removida com sucesso!", wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
     }
 
-    public String getLastAccountNumber(){
+    public String getLastAccountNumber() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[last()]//td[3]"))).getText();
     }
 
-    public String getAllAccountNumber(){
+    public String getAllAccountNumber() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr[last()]//td[3]"))).getText();
     }
 
-
-
-    public void cadastrarMovimentacao(String tipoMovimentacao, String conta, String situacao){
+    public void cadastrarMovimentacao(String tipoMovimentacao, String conta, String situacao) {
 //        System.out.println("Parametros recebidos\nTipo Movimentacao: "+tipoMovimentacao+" Conta: "+conta+" Situacao: "+situacao);
 
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
@@ -177,17 +177,65 @@ public class MovimentacaoPage extends BasePage {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
         selecionarCombo("tipo", tipoMovimentacao);
-        sendKeys(iptDataTransacao,formatter.format(payment));
-        sendKeys(iptDataPagamento,formatter.format(future));
-        sendKeys(iptDescricao, "Pagamento "+today.format(monthFormatter)+" "+faker.name().firstName());
+        sendKeys(iptDataTransacao, formatter.format(payment));
+        sendKeys(iptDataPagamento, formatter.format(future));
+        sendKeys(iptDescricao, "Pagamento " + today.format(monthFormatter) + " " + faker.name().firstName());
         sendKeys(iptInteressado, faker.name().firstName());
-        sendKeys(iptValor, faker.numerify("####.##"));
+
+        String vlPositivo = String.valueOf(faker.number().numberBetween(1,10000));
+
+        sendKeys(iptValor, vlPositivo);
         selecionarCombo("conta", conta);
-        clicarRadio(By.xpath("//input[contains(@id, '"+situacao.toLowerCase()+"')]"));
+        clicarRadio(By.xpath("//input[contains(@id, '" + situacao.toLowerCase() + "')]"));
 
         clickClickableElement(btnSalvarMovimentacao);
 
         Assert.assertTrue(wait.until(ExpectedConditions.visibilityOf(alertSucess)).isDisplayed());
-        Assert.assertEquals("Movimentação adicionada com sucesso!",wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
+        Assert.assertEquals("Movimentação adicionada com sucesso!", wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
     }
+
+    public void validaFiltrosExtrato(String mes, String ano) {
+        goToExtratoPage();
+
+        selecionarCombo("mes", capitalizeFirstLetter(mes));
+        selecionarCombo("ano", ano);
+
+        clickClickableElement(btnBuscarMovimentacao);
+
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@id='tabelaExtrato']"))).isDisplayed());
+
+        List<WebElement> elementList = DriverFactory.getDriver().findElements(By.xpath("//tbody//tr"));
+
+        if (elementList.size() < 1) {
+            System.out.println("Essa busca não retornou valores!");
+        } else {
+            for (WebElement element : elementList) {
+                System.out.println(element.getText());
+            }
+        }
+
+    }
+
+    public static String capitalizeFirstLetter(String str) {
+        if ((str == null) || (str.isEmpty())) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+
+    public void limparTodasMovimentacoes(){
+        goToExtratoPage();
+
+        Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//table[@id='tabelaExtrato']"))).isDisplayed());
+
+        List<WebElement> elementList = DriverFactory.getDriver().findElements(By.xpath("//tbody//tr"));
+
+        for (WebElement element : elementList){
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tbody//tr//a"))).click();
+
+            Assert.assertTrue(wait.until(ExpectedConditions.visibilityOf(alertSucess)).isDisplayed());
+            Assert.assertEquals("Movimentação removida com sucesso!", wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText());
+        }
+    }
+
 }

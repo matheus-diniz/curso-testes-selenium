@@ -3,33 +3,36 @@ package br.mg.matheusdiniz.tests;
 import br.mg.matheusdiniz.core.BaseTest;
 import br.mg.matheusdiniz.pages.ContaPage;
 import br.mg.matheusdiniz.pages.MovimentacaoPage;
+import com.github.javafaker.Faker;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.WebElement;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MovimentacaoTests extends BaseTest {
 
-    //    @Test
+    @Test
     public void test01CamposObrigatorios() {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         movimentacaoPage.goToMovimentacaoPage();
         movimentacaoPage.validaCamposObrigatorios();
     }
 
-    //    @Test
+    @Test
     public void test02ValidarMovimentacaoFutura() {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         movimentacaoPage.goToMovimentacaoPage();
         movimentacaoPage.validarMovimentacaoFutura();
     }
 
-    //    @Test
+    //        @Test
     public void test03CadastrarMovimentacao() {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         movimentacaoPage.goToMovimentacaoPage();
@@ -45,14 +48,14 @@ public class MovimentacaoTests extends BaseTest {
 //        }
 
 
-    //    @Test
+    @Test
     public void test04RemoverMovimentacao() {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         movimentacaoPage.goToExtratoPage();
         movimentacaoPage.removerMovimentacao();
     }
 
-    //    @Test
+    @Test
     public void test05RemoverContaComMovimentacao() {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         movimentacaoPage.goToExtratoPage();
@@ -64,8 +67,32 @@ public class MovimentacaoTests extends BaseTest {
     }
 
     @Test
-    public void cadastrarMovimentacoes() {
+    public void test06_validaFiltrosExtrato() {
+        MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
+        Faker faker = new Faker();
+
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM", new Locale("pt", "BR"));
+
+        String monthsAdd = today.plusMonths(Long.parseLong(faker.numerify("##"))).format(monthFormatter);
+
+        movimentacaoPage.validaFiltrosExtrato(monthsAdd, String.valueOf(today.getYear()));
+    }
+
+    @Test
+    public void test03_cadastrarMovimentacoes() {
         ContaPage contaPage = new ContaPage();
+
+        //TODO: validar casos em que não há conta
+////        List<String> contas = contaPage.listAllAccountCreated();
+////
+////        if (contas.size() < 1) {
+//            for (int i = 0; i < 5; i++) {
+//                ContaTests contaTests = new ContaTests();
+//                contaTests.inserirConta();
+//            }
+////        }
+
         List<String> contas = contaPage.listAllAccountCreated();
 
         List<String> tipoMovimentacao = new ArrayList<>();
@@ -79,15 +106,24 @@ public class MovimentacaoTests extends BaseTest {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         Random random = new Random();
 
-        for (int i = 0; i < 3; i++) {
-            int randomContas = random.nextInt(0, contas.size()+1);
-            int randomMov = random.nextInt(0, tipoMovimentacao.size()+1);
-            int randomSituacao = random.nextInt(0, tipoSituacao.size()+1);
+        for (int i = 0; i < 5; i++) {
+            int randomContas = random.nextInt(0, contas.size());
+            int randomMov = random.nextInt(0, tipoMovimentacao.size());
+            int randomSituacao = random.nextInt(0, tipoSituacao.size());
 
             movimentacaoPage.cadastrarMovimentacao(tipoMovimentacao.get(randomMov), contas.get(randomContas), tipoSituacao.get(randomSituacao));
         }
     }
+
+    //        @Test
+    public void limparTodasMovimentacoes() {
+        MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
+        movimentacaoPage.limparTodasMovimentacoes();
+    }
 }
+
+
+
 
 
 
