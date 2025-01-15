@@ -24,11 +24,6 @@ public class BaseTest {
         DriverFactory.getDriver();
     }
 
-    @BeforeClass
-    public static void login(){
-        LoginPage loginPage = new LoginPage();
-        loginPage.login();
-    }
 
     @After
     public void finaliza() throws IOException {
@@ -42,8 +37,4 @@ public class BaseTest {
         }
     }
 
-    @AfterClass
-    public static void finalizaTestes(){
-        killDriver();
-    }
 }
