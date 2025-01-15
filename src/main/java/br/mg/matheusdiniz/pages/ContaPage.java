@@ -12,13 +12,13 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContaPage extends BasePage {
 
-    private final WebDriver driver;
-
     public ContaPage() {
-        this.driver = DriverFactory.getDriver();
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
     @FindBy(how = How.XPATH, using = "//li[@class='dropdown']")
@@ -85,6 +85,35 @@ public class ContaPage extends BasePage {
 
         String textAlert = wait.until(ExpectedConditions.visibilityOf(alertDanger)).getText();
         Assert.assertEquals("Já existe uma conta com esse nome!", textAlert);
+    }
+
+    public void validarRemocaoDeContaComMovimentacao(String conta){
+        clickClickableElement(menuConta);
+        clickClickableElement(opListarContas);
+
+        System.out.println("Tentando remover conta "+conta+"...");
+
+        clicarBotao(By.xpath("//tr/td[contains(text(), '"+conta+"')]/..//a[contains(@href, 'remover')]"));
+
+        Assert.assertTrue((wait.until(ExpectedConditions.visibilityOf(alertDanger)).isDisplayed()));
+        Assert.assertEquals("Conta em uso na movimentações", wait.until(ExpectedConditions.visibilityOf(alertDanger)).getText());
+    }
+
+    public List<String> listAllAccountCreated(){
+        clickClickableElement(menuConta);
+        clickClickableElement(opListarContas);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tbody//tr")));
+        List<WebElement> elementList = DriverFactory.getDriver().findElements(By.xpath("//tbody//tr"));
+
+        List<String> returnList = new ArrayList<>();
+
+        for (WebElement td : elementList){
+            returnList.add(td.getText());
+//            System.out.println(td.getText());
+        }
+        return returnList;
+
     }
 
 

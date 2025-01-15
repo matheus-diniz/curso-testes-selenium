@@ -25,6 +25,5 @@ public class ContaTests extends BaseTest {
     public void inserirContaExistente(){
         ContaPage contaPage = new ContaPage();
         contaPage.inserirContaRepetida();
-
     }
 }

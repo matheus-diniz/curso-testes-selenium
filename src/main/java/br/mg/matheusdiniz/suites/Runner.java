@@ -3,6 +3,7 @@ package br.mg.matheusdiniz.suites;
 
 import br.mg.matheusdiniz.pages.LoginPage;
 import br.mg.matheusdiniz.tests.ContaTests;
+import br.mg.matheusdiniz.tests.MovimentacaoTests;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -12,7 +13,8 @@ import static br.mg.matheusdiniz.core.DriverFactory.killDriver;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ContaTests.class
+//        ContaTests.class,
+        MovimentacaoTests.class
 })
 public class Runner {
 
