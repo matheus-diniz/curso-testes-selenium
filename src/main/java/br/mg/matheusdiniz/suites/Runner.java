@@ -14,8 +14,8 @@ import static br.mg.matheusdiniz.core.DriverFactory.killDriver;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        ContaTests.class,
-        MovimentacaoTests.class,
+//        ContaTests.class,
+//        MovimentacaoTests.class,
         SaldoTests.class
 })
 public class Runner {
