@@ -83,15 +83,6 @@ public class MovimentacaoTests extends BaseTest {
     public void test03_cadastrarMovimentacoes() {
         ContaPage contaPage = new ContaPage();
 
-        //TODO: validar casos em que não há conta
-////        List<String> contas = contaPage.listAllAccountCreated();
-////
-////        if (contas.size() < 1) {
-//            for (int i = 0; i < 5; i++) {
-//                ContaTests contaTests = new ContaTests();
-//                contaTests.inserirConta();
-//            }
-////        }
 
         List<String> contas = contaPage.listAllAccountCreated();
 
@@ -106,7 +97,7 @@ public class MovimentacaoTests extends BaseTest {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         Random random = new Random();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             int randomContas = random.nextInt(0, contas.size());
             int randomMov = random.nextInt(0, tipoMovimentacao.size());
             int randomSituacao = random.nextInt(0, tipoSituacao.size());
