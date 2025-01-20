@@ -98,18 +98,12 @@ public class MovimentacaoTests extends BaseTest {
         Random random = new Random();
 
         for (int i = 0; i < 5; i++) {
-            int randomContas = random.nextInt(0, contas.size());
-            int randomMov = random.nextInt(0, tipoMovimentacao.size());
-            int randomSituacao = random.nextInt(0, tipoSituacao.size());
+            int randomContas = random.nextInt(contas.size());
+            int randomMov = random.nextInt(tipoMovimentacao.size());
+            int randomSituacao = random.nextInt(tipoSituacao.size());
 
             movimentacaoPage.cadastrarMovimentacao(tipoMovimentacao.get(randomMov), contas.get(randomContas), tipoSituacao.get(randomSituacao));
         }
-    }
-
-    //        @Test
-    public void limparTodasMovimentacoes() {
-        MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
-        movimentacaoPage.limparTodasMovimentacoes();
     }
 }
 

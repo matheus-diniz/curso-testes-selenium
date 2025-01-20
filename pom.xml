@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -26,8 +26,8 @@
                         <includes>
                             <include>**/*Runner.java</include>
                         </includes>
-                        <parallel>all</parallel>
-                        <threadCount>1</threadCount>
+<!--                        <parallel>all</parallel>-->
+<!--                        <threadCount>1</threadCount>-->
                     </configuration>
                 </plugin>
             </plugins>
@@ -40,13 +40,12 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>3.14.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>compile</scope>
+            <version>4.13</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -59,12 +58,12 @@
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>RELEASE</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
 
     </dependencies>
