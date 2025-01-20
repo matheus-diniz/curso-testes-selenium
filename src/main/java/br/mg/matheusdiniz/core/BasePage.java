@@ -28,9 +28,9 @@ public class BasePage {
     }
 
     public void sendKeys(WebElement element, String value){
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
         highlight(element);
-        element.click();
+//        element.click();
         element.sendKeys(value);
     }
 
@@ -144,7 +144,7 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(element));
         highlight(element);
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+            element.click();
         } catch (Exception e){
             System.out.println("O elemento: "+element+" nao foi encontrado. "+e);
         }

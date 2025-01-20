@@ -14,8 +14,6 @@ public class SaldoTests extends BaseTest {
     @Test
     public void consultaSaldoContas() {
         HomePage homePage = new HomePage();
-        homePage.goToHomePage();
-
         homePage.validaSaldoContas();
     }
 }

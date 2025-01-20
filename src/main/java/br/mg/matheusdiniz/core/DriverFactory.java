@@ -1,11 +1,9 @@
 package br.mg.matheusdiniz.core;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
     //    static WebDriver driver;
@@ -16,10 +14,17 @@ public class DriverFactory {
 //            return initDriver();
 //        }
 //    };
-
+//    private static DriverFactory instance;
     private static ThreadLocal<WebDriver> threadDriver = ThreadLocal.withInitial(() -> initDriver());
 
     private DriverFactory() {
+    }
+
+    public static synchronized ThreadLocal<WebDriver> getInstance(){
+        if (threadDriver == null){
+            threadDriver = new ThreadLocal<>();
+        }
+        return threadDriver;
     }
 
     public static WebDriver getDriver() {
@@ -49,6 +54,10 @@ public class DriverFactory {
 
     private static WebDriver startFirefoxDriver() {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/driver/geckodriver.exe");
+
+        // Configurar as opções do Firefox para iniciar no modo privado
+         FirefoxOptions options = new FirefoxOptions();
+         options.addArguments("-private");
         return new FirefoxDriver();
     }
 

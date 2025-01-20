@@ -43,10 +43,10 @@ public class ContaPage extends BasePage {
     protected WebElement alertDanger;
 
     public void adicionarConta(String conta) {
-        System.out.println("Criando conta " + conta + "...");
         clickClickableElement(menuConta);
         clickClickableElement(opAdicionarConta);
         sendKeys(iptNomeConta, conta);
+        System.out.println("Criando conta " + conta + "...");
         clickClickableElement(btnSalvarConta);
 
         String textAlert = wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText();

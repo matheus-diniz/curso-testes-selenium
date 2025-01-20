@@ -97,7 +97,7 @@ public class MovimentacaoTests extends BaseTest {
         MovimentacaoPage movimentacaoPage = new MovimentacaoPage();
         Random random = new Random();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             int randomContas = random.nextInt(0, contas.size());
             int randomMov = random.nextInt(0, tipoMovimentacao.size());
             int randomSituacao = random.nextInt(0, tipoSituacao.size());

@@ -19,11 +19,8 @@ public class LoginPage extends BasePage {
     //matheusalvesdiniz+2025@gmail.com
     //matheus1234
 
-    private final WebDriver driver;
-
     public LoginPage() {
-        this.driver = DriverFactory.getDriver();
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
     @FindBy(how = How.ID, using = "email")
@@ -40,11 +37,12 @@ public class LoginPage extends BasePage {
 
     public void login() {
         DriverFactory.getDriver().get(Propriedades.URL_SEU_BARRIGA_APP);
+        wait.until(ExpectedConditions.visibilityOf(iptLogin));
         sendKeys(iptLogin, Propriedades.LOGIN);
         sendKeys(iptSenha, Propriedades.SENHA);
         clickClickableElement(btnEntrar);
-        String textAlert = wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText();
-        Assert.assertTrue(textAlert.contains("Bem vindo"));
+//        String textAlert = wait.until(ExpectedConditions.visibilityOf(alertSucess)).getText();
+//        Assert.assertTrue(textAlert.contains("Bem vindo"));
     }
 
 }

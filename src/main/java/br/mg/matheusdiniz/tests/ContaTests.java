@@ -3,7 +3,8 @@ package br.mg.matheusdiniz.tests;
 import br.mg.matheusdiniz.core.BaseTest;
 import br.mg.matheusdiniz.pages.ContaPage;
 import com.github.javafaker.Faker;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.jupiter.api.Test;
 
 
 public class ContaTests extends BaseTest {
